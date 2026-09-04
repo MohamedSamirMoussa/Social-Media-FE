@@ -5,6 +5,10 @@
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
     "types": ["vite/client"],
+    "paths": {
+      "@mui/icons-material": ["./node_modules/@mui/icons-material/index.d.ts"],
+      "@mui/icons-material/*": ["./node_modules/@mui/icons-material/*.d.ts"]
+    },
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 

@@ -4,6 +4,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://socailmediabe.vercel.app/api/:path*"
+    },
+    {
+      "source": "/socket.io/:path*",
+      "destination": "https://socailmediabe.vercel.app/socket.io/:path*"
     }
   ]
 }

@@ -1,16 +1,21 @@
 import { useEffect } from "react";
 import { socket } from "../services/socket/socket";
+import { useAppSelector } from "./hooks";
 
 export const useSocket = () => {
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.isAuthenticated,
+  );
+
   useEffect(() => {
-    if (!socket.connected) {
+    if (isAuthenticated && !socket.connected) {
       socket.connect();
     }
 
-    return () => {
+    if (!isAuthenticated && socket.connected) {
       socket.disconnect();
-    };
-  }, []);
+    }
+  }, [isAuthenticated]);
 
   return socket;
 };

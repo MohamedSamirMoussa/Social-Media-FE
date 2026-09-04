@@ -56,141 +56,149 @@ const AllUsers = React.lazy(() => import("./Components/Friends/AllUsers"));
 const Profile = React.lazy(() => import("./Components/Profile/Profile"));
 
 /* =========================
+   Router
+========================= */
+
+const router = createHashRouter([
+  {
+    path: "",
+    element: (
+      <>
+        <Layout />
+      </>
+    ),
+
+    children: [
+      {
+        path: "/",
+        element: (
+          <>
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+      {
+        path: "/chat",
+        element: (
+          <>
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <>
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+      {
+        path: "/profile/:userId",
+        element: (
+          <>
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+      {
+        path: "/friends",
+        element: (
+          <>
+            <ProtectedRoute>
+              <AllUsers />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+      {
+        path: "/friends-requests",
+        element: (
+          <>
+            <ProtectedRoute>
+              <FriendRequests />
+            </ProtectedRoute>
+          </>
+        ),
+      },
+
+      {
+        path: "/login",
+        element: (
+          <GuestRoute>
+            <Signin />
+          </GuestRoute>
+        ),
+      },
+
+      {
+        path: "/register",
+        element: (
+          <GuestRoute>
+            <Signup />
+          </GuestRoute>
+        ),
+      },
+
+      {
+        path: "/confirmEmail",
+        element: (
+          <GuestRoute>
+            <ConfirmEmail />
+          </GuestRoute>
+        ),
+      },
+
+      {
+        path: "/forgetPassword",
+        element: (
+          <GuestRoute>
+            <ForgetPassword />
+          </GuestRoute>
+        ),
+      },
+
+      {
+        path: "/verifyPassword",
+        element: (
+          <GuestRoute>
+            <VerifyPassword />
+          </GuestRoute>
+        ),
+      },
+
+      {
+        path: "/resetPassword",
+        element: (
+          <GuestRoute>
+            <ResetPassword />
+          </GuestRoute>
+        ),
+      },
+    ],
+  },
+]);
+
+/* =========================
    App Content
 ========================= */
 
 function AppContent() {
   const dispatch = useAppDispatch();
+
+  useSocket();
+
   React.useEffect(() => {
-    void dispatch(getMe()).unwrap();
+    void dispatch(getMe());
   }, [dispatch]);
-  const router = createHashRouter([
-    {
-      path: "",
-      element: (
-        <>
-          <Layout />
-        </>
-      ),
-
-      children: [
-        {
-          path: "/",
-          element: (
-            <>
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-        {
-          path: "/chat",
-          element: (
-            <>
-              <ProtectedRoute>
-                <Chat />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-        {
-          path: "/profile",
-          element: (
-            <>
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-        {
-          path: "/profile/:userId",
-          element: (
-            <>
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-        {
-          path: "/friends",
-          element: (
-            <>
-              <ProtectedRoute>
-                <AllUsers />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-        {
-          path: "/friends-requests",
-          element: (
-            <>
-              <ProtectedRoute>
-                <FriendRequests />
-              </ProtectedRoute>
-            </>
-          ),
-        },
-
-        {
-          path: "/login",
-          element: (
-            <GuestRoute>
-              <Signin />
-            </GuestRoute>
-          ),
-        },
-
-        {
-          path: "/register",
-          element: (
-            <GuestRoute>
-              <Signup />
-            </GuestRoute>
-          ),
-        },
-
-        {
-          path: "/confirmEmail",
-          element: (
-            <GuestRoute>
-              <ConfirmEmail />
-            </GuestRoute>
-          ),
-        },
-
-        {
-          path: "/forgetPassword",
-          element: (
-            <GuestRoute>
-              <ForgetPassword />
-            </GuestRoute>
-          ),
-        },
-
-        {
-          path: "/verifyPassword",
-          element: (
-            <GuestRoute>
-              <VerifyPassword />
-            </GuestRoute>
-          ),
-        },
-
-        {
-          path: "/resetPassword",
-          element: (
-            <GuestRoute>
-              <ResetPassword />
-            </GuestRoute>
-          ),
-        },
-      ],
-    },
-  ]);
 
   return (
     <>
@@ -205,10 +213,11 @@ function AppContent() {
    App
 ========================= */
 
+const queryClient = new QueryClient();
+
 function App() {
   const clientId = String(import.meta.env.VITE_CLIENT_GOOGLE_ID);
-  useSocket();
-  const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId={clientId}>
