@@ -62,7 +62,7 @@ const Profile = React.lazy(() => import("./Components/Profile/Profile"));
 function AppContent() {
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    dispatch(getMe()).unwrap();
+    void dispatch(getMe()).unwrap();
   }, [dispatch]);
   const router = createHashRouter([
     {
@@ -206,15 +206,12 @@ function AppContent() {
 ========================= */
 
 function App() {
-  const clientId = String(import.meta.env.VITE_CLIENT_GOOGLE_ID)
-  console.log('====================================');
-  console.log(clientId);
-  console.log('====================================');
+  const clientId = String(import.meta.env.VITE_CLIENT_GOOGLE_ID);
   useSocket();
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_GOOGLE_ID}>
+      <GoogleOAuthProvider clientId={clientId}>
         <Provider store={store}>
           <AppContent />
         </Provider>
