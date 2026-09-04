@@ -48,7 +48,7 @@ const Signup = () => {
   ) => {
     try {
       const res = await dispatch(signInThunk(values)).unwrap();
-      await dispatch(getMe()).unwrap();
+      void (await dispatch(getMe()).unwrap());
       toast.success(res.message);
       navigate("/");
       resetForm();

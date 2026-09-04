@@ -41,7 +41,7 @@ const GoogleSignin = () => {
         throw data;
       }
 
-      await dispatch(getMe()).unwrap();
+      void (await dispatch(getMe()).unwrap());
 
       toast.success(data.message ?? "Login successful");
 
