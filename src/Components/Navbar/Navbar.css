@@ -1,0 +1,19 @@
+.nav-bar .link {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+}
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.css-1ph8izu-MuiButtonBase-root-MuiButton-root,
+.css-zo4wgo-MuiButtonBase-root-MuiButton-root {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#box:hover {
+    box-shadow: 0 5px 5px #0000009c;
+}

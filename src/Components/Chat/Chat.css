@@ -1,0 +1,10 @@
+#chat figure img {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(194, 117, 22);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
