@@ -33,6 +33,8 @@ interface AuthResponse {
   status: number;
   data?: User;
   user?: User;
+  socketToken?: string;
+  signatureLevel?: "Bearer" | "admin";
 }
 
 interface AuthState {
@@ -41,6 +43,8 @@ interface AuthState {
   error: string | null;
   email: string | null;
   isAuthenticated: boolean;
+  socketToken: string | null;
+  signatureLevel: "Bearer" | "admin";
 }
 export enum RoleEnum {
   admin = "admin",
@@ -53,6 +57,8 @@ const initialState: AuthState = {
   error: null,
   email: null,
   isAuthenticated: false,
+  socketToken: null,
+  signatureLevel: "Bearer",
 };
 
 /* =========================
@@ -419,6 +425,8 @@ const auth = createSlice({
         // }
 
         state.user = action.payload.data ?? null;
+        state.socketToken = action.payload.socketToken ?? null;
+        state.signatureLevel = action.payload.signatureLevel ?? "Bearer";
 
         state.isAuthenticated = action.payload.data != null;
       })
@@ -427,6 +435,8 @@ const auth = createSlice({
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.socketToken = null;
+        state.signatureLevel = "Bearer";
       })
 
       /* =====================
@@ -445,6 +455,8 @@ const auth = createSlice({
         state.user = null;
         state.email = null;
         state.isAuthenticated = false;
+        state.socketToken = null;
+        state.signatureLevel = "Bearer";
       })
 
       .addCase(logoutThunk.rejected, (state, action) => {
@@ -453,6 +465,8 @@ const auth = createSlice({
         state.user = null;
         state.email = null;
         state.isAuthenticated = false;
+        state.socketToken = null;
+        state.signatureLevel = "Bearer";
 
         state.error = action.payload?.errMessage || "Logout failed";
       })

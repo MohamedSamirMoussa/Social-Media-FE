@@ -3,19 +3,28 @@ import { socket } from "../services/socket/socket";
 import { useAppSelector } from "./hooks";
 
 export const useSocket = () => {
-  const isAuthenticated = useAppSelector(
-    (state) => state.auth.isAuthenticated,
+  const { isAuthenticated, socketToken, signatureLevel } = useAppSelector(
+    (state) => state.auth,
   );
 
   useEffect(() => {
-    if (isAuthenticated && !socket.connected) {
-      socket.connect();
+    if (isAuthenticated && socketToken) {
+      socket.auth = {
+        token: socketToken,
+        signatureLevel,
+      };
+
+      if (!socket.connected) {
+        socket.connect();
+      }
+
+      return;
     }
 
-    if (!isAuthenticated && socket.connected) {
+    if (socket.connected) {
       socket.disconnect();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, signatureLevel, socketToken]);
 
   return socket;
 };

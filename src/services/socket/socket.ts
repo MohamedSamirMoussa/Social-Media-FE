@@ -1,10 +1,6 @@
 import { io, Socket } from "socket.io-client";
 
-const socketOrigin = import.meta.env.DEV
-  ? import.meta.env.VITE_BE_SOCKET_URI
-  : window.location.origin;
-
-export const socket: Socket = io(socketOrigin, {
+export const socket: Socket = io(import.meta.env.VITE_BE_SOCKET_URI, {
   path: "/socket.io",
   transports: ["websocket"],
   withCredentials: true,
