@@ -87,8 +87,6 @@ const CreatePost = ({ currentUser }: CreatePostProps) => {
     setAllowComments(true);
   };
 
-
-
   const handleCreatePost = async () => {
     if (!description.trim() && !attachments.length) {
       return;
@@ -132,7 +130,7 @@ const CreatePost = ({ currentUser }: CreatePostProps) => {
 
           borderColor: "divider",
 
-          my:8
+          my: 8,
         }}
       >
         <Box
@@ -267,8 +265,10 @@ const CreatePost = ({ currentUser }: CreatePostProps) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             variant="standard"
-            InputProps={{
-              disableUnderline: true,
+            slotProps={{
+              input: {
+                disableUnderline: true,
+              },
             }}
             sx={{
               mb: 2,
