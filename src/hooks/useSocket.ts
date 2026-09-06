@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { socket } from "../services/socket/socket";
 import { useAppSelector } from "./hooks";
-
+import { jwtDecode } from "jwt-decode";
 export const useSocket = () => {
   const { isAuthenticated, socketToken, signatureLevel } = useAppSelector(
     (state) => state.auth,
