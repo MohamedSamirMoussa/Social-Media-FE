@@ -9,6 +9,10 @@ export const useSocket = () => {
 
   useEffect(() => {
     if (isAuthenticated && socketToken) {
+      console.log({
+        signatureLevel,
+        tokenPayload: jwtDecode(socketToken),
+      });
       socket.auth = {
         token: socketToken,
         signatureLevel,
